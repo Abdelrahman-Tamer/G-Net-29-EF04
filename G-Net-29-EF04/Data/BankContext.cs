@@ -11,7 +11,7 @@ public class BankContext : DbContext
     public DbSet<CustomerAccount> CustomerAccounts => Set<CustomerAccount>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlServer("Server=.;Database=BankDB;Trusted_Connection=True;TrustServerCertificate=True");
+        => options.UseSqlServer("Data Source=ABDO;Initial Catalog=BankDB;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Application Name=\"SQL Server Management Studio\";Command Timeout=0");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
