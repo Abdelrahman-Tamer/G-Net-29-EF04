@@ -1,4 +1,6 @@
 using System;
+using G_Net_29_EF04.Data;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -8,6 +10,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace G_Net_29_EF04.Migrations
 {
     /// <inheritdoc />
+    [DbContext(typeof(BankDbContext))]
+    [Migration("20250429000001_InitialCreate")]
     public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
@@ -177,26 +181,30 @@ namespace G_Net_29_EF04.Migrations
                 column: "AccountNumber");
 
             // ── Seed Branches ──
-            migrationBuilder.InsertData(
-                table: "Branches",
-                columns: new[] { "Id", "Code", "Name", "Address", "PhoneNumber" },
-                values: new object[,]
-                {
-                    { 1, "CAI-01", "Cairo Main Branch",    "10 Tahrir Square, Cairo",      "0221234567" },
-                    { 2, "ALX-01", "Alexandria Branch",    "5 Corniche Road, Alexandria",  "0331234567" },
-                    { 3, "GIZ-01", "Giza Branch",          "15 Haram Street, Giza",        "0381234567" }
-                });
+            migrationBuilder.Sql("""
+                SET IDENTITY_INSERT [Branches] ON;
+
+                INSERT INTO [Branches] ([Id], [Code], [Name], [Address], [PhoneNumber])
+                VALUES
+                    (1, N'CAI-01', N'Cairo Main Branch', N'10 Tahrir Square, Cairo', N'0221234567'),
+                    (2, N'ALX-01', N'Alexandria Branch', N'5 Corniche Road, Alexandria', N'0331234567'),
+                    (3, N'GIZ-01', N'Giza Branch', N'15 Haram Street, Giza', N'0381234567');
+
+                SET IDENTITY_INSERT [Branches] OFF;
+                """);
 
             // ── Seed Managers ──
-            migrationBuilder.InsertData(
-                table: "Managers",
-                columns: new[] { "Id", "FullName", "Email", "PhoneNumber", "HireDate", "BranchId" },
-                values: new object[,]
-                {
-                    { 1, "Ahmed Hassan", "ahmed.hassan@bank.com", "01001111111", new DateTime(2018, 3, 15), 1 },
-                    { 2, "Sara Mohamed", "sara.mohamed@bank.com", "01002222222", new DateTime(2019, 7,  1), 2 },
-                    { 3, "Omar Khaled",  "omar.khaled@bank.com",  "01003333333", new DateTime(2020, 1, 10), 3 }
-                });
+            migrationBuilder.Sql("""
+                SET IDENTITY_INSERT [Managers] ON;
+
+                INSERT INTO [Managers] ([Id], [FullName], [Email], [PhoneNumber], [HireDate], [BranchId])
+                VALUES
+                    (1, N'Ahmed Hassan', N'ahmed.hassan@bank.com', N'01001111111', '2018-03-15T00:00:00', 1),
+                    (2, N'Sara Mohamed', N'sara.mohamed@bank.com', N'01002222222', '2019-07-01T00:00:00', 2),
+                    (3, N'Omar Khaled', N'omar.khaled@bank.com', N'01003333333', '2020-01-10T00:00:00', 3);
+
+                SET IDENTITY_INSERT [Managers] OFF;
+                """);
         }
 
         /// <inheritdoc />
