@@ -1,12 +1,27 @@
-
-namespace BankProject.Models;
-public class CustomerAccount
+namespace G_Net_29_EF04.Models
 {
-    public int CustomerId { get; set; }
-    public Customer Customer { get; set; }
-    public int AccountNumber { get; set; }
-    public Account Account { get; set; }
-    public string OwnershipType { get; set; }
-    public DateTime OwnershipStartDate { get; set; }
-    public string AccountStatus { get; set; }
+    public enum OwnershipType
+    {
+        Primary,
+        CoHolder
+    }
+
+    public enum AccountStatus
+    {
+        Active,
+        Closed
+    }
+
+    public class CustomerAccount
+    {
+        public int CustomerId { get; set; }
+        public string AccountNumber { get; set; } = string.Empty;
+        public OwnershipType OwnershipType { get; set; }
+        public DateTime OwnershipStartDate { get; set; }
+        public AccountStatus AccountStatus { get; set; }
+
+        // Navigation
+        public Customer Customer { get; set; } = null!;
+        public Account Account { get; set; } = null!;
+    }
 }
